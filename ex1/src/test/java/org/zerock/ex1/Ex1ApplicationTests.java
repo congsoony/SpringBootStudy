@@ -8,7 +8,7 @@ class Ex1ApplicationTests {
 
 	@Test
 	void contextLoads() {
-		System.out.println("contextLoadsss....");
+		System.out.println("contextLoads.....");
 	}
 
 }
