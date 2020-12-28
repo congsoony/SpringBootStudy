@@ -55,6 +55,6 @@ public class GuestbookController {
 		log.info("gno: "+gno);
 		GuestbookDTO dto= service.read(gno);
 		model.addAttribute("dto", dto);
-		
+
 	}
 }
