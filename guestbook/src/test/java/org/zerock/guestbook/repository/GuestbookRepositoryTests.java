@@ -54,7 +54,6 @@ public class GuestbookRepositoryTests {
 		String keyword = "1";
 		BooleanBuilder builder = new BooleanBuilder();
 		BooleanExpression expression = qGuestbook.title.contains(keyword);
-
 		builder.and(expression);
 		Page<Guestbook> result = guestbookRepository.findAll(builder, pageable);
 
@@ -62,5 +61,27 @@ public class GuestbookRepositoryTests {
 			System.out.println(guestbook);
 		});
 
+	}
+	@Test
+	public void testQuery2(){
+		Pageable pageable = PageRequest.of(0,10,Sort.by("gno").descending());
+
+		QGuestbook qGuestbook = QGuestbook.guestbook;
+		String keyword = "1";
+
+		BooleanBuilder builder = new BooleanBuilder();
+
+		BooleanExpression exTitle = qGuestbook.title.contains(keyword);
+		BooleanExpression exContent = qGuestbook.content.contains(keyword);
+
+		BooleanExpression exAll = exTitle.or(exContent);//where 문 조건 or처리
+
+		builder.and(exAll);
+		builder.and(qGuestbook.gno.gt(0L));// where 문 조건 and 0보다 큰지
+		Page<Guestbook> result = guestbookRepository.findAll(builder, pageable);
+
+		result.stream().forEach(guestbook -> {
+			System.out.println(guestbook);
+		});
 	}
 }
