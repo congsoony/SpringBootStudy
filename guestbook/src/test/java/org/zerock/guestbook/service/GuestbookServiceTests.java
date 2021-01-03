@@ -7,11 +7,17 @@ import org.zerock.guestbook.dto.GuestbookDTO;
 import org.zerock.guestbook.dto.PageRequestDTO;
 import org.zerock.guestbook.dto.PageResultDTO;
 import org.zerock.guestbook.entity.Guestbook;
+import org.zerock.guestbook.repository.GuestbookRepository;
+
+import javax.swing.text.html.Option;
+import java.util.Optional;
 
 @SpringBootTest
 public class GuestbookServiceTests {
 	@Autowired
 	private GuestbookService service;
+	@Autowired
+	private GuestbookRepository repository;
 
 	@Test
 	public void testRegister(){
@@ -41,4 +47,13 @@ public class GuestbookServiceTests {
 		resultDTO.getPageList().forEach(i-> System.out.println(i));
 	}
 
+	@Test
+	public void modify(){ //변경되는지 테스트
+		Optional<Guestbook> result = repository.findById(300L);
+		Guestbook guestbook = result.get();
+		guestbook.changeContent("바꿨다ㅋㅋㅋ");
+		guestbook.changeTitle("빠꿨다ㅋㅋㅋ");
+		service.modify(service.entityToDto(guestbook));
+
+	}
 }
