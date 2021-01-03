@@ -28,6 +28,7 @@ public class PageResultDTO<DTO, EN> {
 
 	//페이지 번호 목록
 	private List<Integer> pageList;
+
 	public PageResultDTO(Page<EN> result, Function<EN, DTO> fn){
 		dtoList = result.stream().map(fn).collect(Collectors.toList());
 		totalPage = result.getTotalPages();
@@ -50,7 +51,4 @@ public class PageResultDTO<DTO, EN> {
 
 	}
 
-	public PageResultDTO(Page<EN> result, Function<EN, DTO> fn){
-		dtoList = result.stream().map(fn).collect(Collectors.toList());
-	}
 }
