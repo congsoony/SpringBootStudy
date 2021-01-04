@@ -13,7 +13,7 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @Getter
 @ToString
-public class Board {
+public class Board extends BaseEntity{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long bno;
