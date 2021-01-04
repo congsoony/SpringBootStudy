@@ -2,17 +2,14 @@ package org.zerock.board.entity;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString
+@ToString(exclude = "writer")//writer 변수의 tostring의 제외하겠다라는뜻
 public class Board extends BaseEntity{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,4 +18,7 @@ public class Board extends BaseEntity{
 	private String title;
 
 	private String content;
+
+	@ManyToOne//FK설정
+	private Member writer;//연관관계 지정
 }
