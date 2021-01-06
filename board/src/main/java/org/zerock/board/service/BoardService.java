@@ -7,10 +7,13 @@ import org.zerock.board.entity.Board;
 import org.zerock.board.entity.Member;
 
 public interface BoardService {
-	Long register(BoardDTO dto);
-	PageResultDTO<BoardDTO, Object[]> getList(PageRequestDTO pageRequestDTO);
+	Long register(BoardDTO dto); //게시글 등록
 
-	BoardDTO get(Long bno);
+	PageResultDTO<BoardDTO, Object[]> getList(PageRequestDTO pageRequestDTO); //게시글 목록 조회
+
+	BoardDTO get(Long bno); //게시글 조회
+
+	void removeWithReplies(Long bno);
 
 	default Board dtoToEntity(BoardDTO dto){
 		Member member = Member.builder().email(dto.getWriterEmail()).build();
