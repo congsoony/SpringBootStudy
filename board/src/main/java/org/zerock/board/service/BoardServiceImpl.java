@@ -64,4 +64,16 @@ public class BoardServiceImpl implements BoardService{
 		repository.deleteById(bno);
 	}
 
+	@Override
+	@Transactional//이거안넣으면 오류
+	public void modify(BoardDTO boardDTO) {
+		Board board = repository.getOne(boardDTO.getBno());
+
+		if(board != null){// null필요없음 getOne에 없으면 스스로 EntityNotFoundException 발생함
+			board.changeTitle(boardDTO.getTitle());
+			board.changeContent(boardDTO.getContent());
+			repository.save(board);
+		}
+	}
+
 }
