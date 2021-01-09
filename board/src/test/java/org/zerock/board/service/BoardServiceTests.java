@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.zerock.board.dto.BoardDTO;
 import org.zerock.board.dto.PageRequestDTO;
 import org.zerock.board.dto.PageResultDTO;
+import org.zerock.board.repository.BoardRepository;
 
 @SpringBootTest
 public class BoardServiceTests {
@@ -55,4 +56,6 @@ public class BoardServiceTests {
 				.build();
 		boardService.modify(boardDTO);
 	}
+
 }
+
