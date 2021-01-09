@@ -87,9 +87,11 @@
                 </div>
             </div>
         </div>
+
+
         <script th:inline="javascript">
+            var bno = [[${dto.bno}]];
             $(document).ready(function(){
-                var bno = [[${dto.bno}]];
                 var listGroup = $(".replyList");
             function formatTime(str){
                 var date = new Date(str);
@@ -129,11 +131,36 @@
                 modal.modal('show');
 
                 //댓글 입력 부분 초기화
-                $('input[name]="replyText"]').val('');
-                $('input[name="replyer"]').val('');
+                $('input[name ="replyText"]').val('');
+                $('input[name ="replyer"]').val('');
 
                 $(".modal-footer .btn").hide();//모달 내의 모든 버튼이 안보임
                 $(".replySave, .replyClose").show();//필요한 버튼들만 보임
+            });
+
+            $(".replySave").click(function(){
+                var reply ={
+                    bno: bno,
+                    text : $('input[name="replyText"]').val(),
+                    replyer : $('input[name="replyer"]').val()
+                }
+                console.log(reply);
+                $.ajax({
+                    url: '/replies/',
+                    method: 'post',
+                    data: JSON.stringify(reply),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    success: function(data){
+                        console.log(data);
+
+                        var newRno = parseInt(data);
+
+                        alert(newRno + "번 댓글이 등록되었습니다.")
+                        modal.modal('hide');
+                        loadJSONData();
+                    }
+                })
             });
 
         </script>
