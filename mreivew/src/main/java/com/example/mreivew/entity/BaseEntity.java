@@ -1,4 +1,4 @@
-package org.zerock.board.entity;
+package com.example.mreivew.entity;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
