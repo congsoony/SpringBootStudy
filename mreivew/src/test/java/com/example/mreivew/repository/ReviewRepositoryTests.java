@@ -6,6 +6,7 @@ import com.example.mreivew.entity.Review;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -16,6 +17,9 @@ public class ReviewRepositoryTests {
 
 	@Autowired
 	private ReviewRepository reviewRepository;
+
+	@Autowired
+	private MemberRepository memberRepository;
 
 	@Test
 	public void insertMoviewReviews(){
@@ -51,5 +55,16 @@ public class ReviewRepositoryTests {
 			System.out.println(movieReview.getMember().getEmail());
 			System.out.println("---------------------");
 		});
+	}
+
+	@Test
+	@Commit
+	@Transactional
+	public void testDeleteMember(){
+		Long mid = 1L;
+		Member member = Member.builder().mid(mid).build();
+
+		reviewRepository.deleteByMember(member);
+		memberRepository.deleteById(mid);
 	}
 }
