@@ -61,7 +61,7 @@ public class UploadController {
 	private String makeFolder(){
 		String str = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
 
-		//File.separator 파일경로 구분 윈도우는 \ 리눅스눈 / 이거임
+		//File.separator 파일경로 구분 윈도우는 \ 리눅스는 / 이거임
 		String folderPath = str.replace("//", File.separator);
 
 		File uploadPathFolder = new File(uploadPath, folderPath);
