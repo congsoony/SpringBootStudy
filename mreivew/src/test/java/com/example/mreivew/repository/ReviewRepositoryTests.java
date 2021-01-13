@@ -61,7 +61,7 @@ public class ReviewRepositoryTests {
 	@Commit
 	@Transactional
 	public void testDeleteMember(){
-		Long mid = 1L;
+		Long mid = 3L;
 		Member member = Member.builder().mid(mid).build();
 
 		reviewRepository.deleteByMember(member);
