@@ -4,13 +4,19 @@ import com.example.mreview.entity.Member;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.stream.IntStream;
 
 @SpringBootTest
-public class MovieRepsitoryTests {
+public class MemberRepositoryTests {
+
 	@Autowired
 	private MemberRepository memberRepository;
+
+	@Autowired
+	private ReviewRepository reviewRepository;
 
 	@Test
 	public void insertMembers(){
@@ -21,5 +27,25 @@ public class MovieRepsitoryTests {
 					.nickname("reviewer"+i).build();
 			memberRepository.save(member);
 		});
+	}
+
+	@Test
+	@Commit
+	@Transactional
+	public void testDeleteMember(){
+		Long mid = 1L;
+
+		Member member = Member.builder().mid(mid).build();
+
+		//기존
+		// 이렇게하면 fk를 먼저 삭제하지않아 실패
+		//memberRepository.deleteById(mid);
+		//reviewRepository.deleteByMember(member);
+
+
+		//순서주의
+		reviewRepository.deleteByMember(member);
+		memberRepository.deleteById(mid);
+
 	}
 }

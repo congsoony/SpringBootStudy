@@ -6,7 +6,9 @@ import com.example.mreview.entity.Review;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -35,5 +37,22 @@ public class ReviewRepositoryTests {
 					.build();
 			reviewRepository.save(movieReview);
 		});
+	}
+
+	@Test
+	public void testGetMovieReviews(){
+
+		Movie movie = Movie.builder().mno(92L).build();
+		List<Review> result = reviewRepository.findByMovie(movie);
+
+		result.forEach(movieReview -> {
+			System.out.print(movieReview.getReviewnum());
+			System.out.print("\t"+movieReview.getGrade());
+			System.out.print("\t"+movieReview.getText());
+			System.out.print("\t"+movieReview.getMember().getEmail());
+			System.out.println();
+
+		});
+
 	}
 }
