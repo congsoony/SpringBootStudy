@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,6 +32,22 @@ public class UploadController {
 
 	@Value("${org.zerock.upload.path}") //application.properties의 변수
 	private String uploadPath;
+
+	private String makeFolder() {
+
+		String str = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+
+		String folderPath = str.replace("//", File.separator);
+
+		//make folder ------
+		File uploadPathFolder = new File(uploadPath, folderPath);
+
+		if(uploadPathFolder.exists() == false){
+			uploadPathFolder.mkdirs();
+		}
+		return folderPath;
+	}
+
 
 	@PostMapping("/uploadAjax")
 	public ResponseEntity<List<UploadResultDTO>> uploadFile(MultipartFile[] uploadFiles){
@@ -108,19 +125,21 @@ public class UploadController {
 		}
 		return result; //업로드된파일 데이터 html로 result 보냄
 	}
+	@PostMapping("/removeFile")
+	public ResponseEntity<Boolean> removeFile(String fileName){
+		String srcFileName = null;
+		try{
+			srcFileName = URLDecoder.decode(fileName, "UTF-8");
+			File file = new File(uploadPath + File.separator +srcFileName);
+			boolean result = file.delete();
 
-	private String makeFolder() {
-
-		String str = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-
-		String folderPath = str.replace("//", File.separator);
-
-		//make folder ------
-		File uploadPathFolder = new File(uploadPath, folderPath);
-
-		if(uploadPathFolder.exists() == false){
-			uploadPathFolder.mkdirs();
+			File thumbnail =new File(file.getParent(), "s_" + file.getName());
+			result = thumbnail.delete();
+			return new ResponseEntity<>(result,HttpStatus.OK);
+		} catch(UnsupportedEncodingException e){
+			e.printStackTrace();
+			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return folderPath;
 	}
+
 }
