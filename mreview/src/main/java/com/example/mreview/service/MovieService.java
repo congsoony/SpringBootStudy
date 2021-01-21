@@ -10,7 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public interface MoviceService {
+public interface MovieService {
+
 	Long register(MovieDTO movieDTO);
 
 	default Map<String,Object> dtoToEntity(MovieDTO movieDTO){

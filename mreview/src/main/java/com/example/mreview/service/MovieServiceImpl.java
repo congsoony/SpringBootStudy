@@ -16,7 +16,7 @@ import java.util.Map;
 @Service
 @Log4j2
 @RequiredArgsConstructor
-public class MovieServiceImpl implements MoviceService{
+public class MovieServiceImpl implements MovieService{
 
 	private final MovieRepository movieRepository;
 
@@ -34,7 +34,7 @@ public class MovieServiceImpl implements MoviceService{
 		movieImageList.forEach(movieImage -> {
 			imageRepository.save(movieImage);
 		});
-		
+
 		return movie.getMno();
 	}
 
