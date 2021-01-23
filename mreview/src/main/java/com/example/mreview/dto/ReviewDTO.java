@@ -20,7 +20,8 @@ public class ReviewDTO {
 	private Long mno;
 
 	//Member id
-	private Long id;
+	private Long mid;
+
 	//Member nickname
 	private String nickname;
 	//Member email
