@@ -31,6 +31,14 @@
             Review Count <span class="badge badge-light">[[${dto.reviewCnt}]]</span>
         </button>
 
+        <button type="button" class="btn btn-info addReviewBtn">
+            Review Register
+        </button>
+
+        <div class="list-group reviewList">
+
+        </div>
+
         <div class="reviewModal modal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -99,7 +107,22 @@
                         }
                     }
                 });
-                $(".reviewModal").modal("show");
+                //$(".reviewModal").modal("show"); 미리보기용
+
+                var reviewModal = $(".reviewModal");
+                var inputMid = $('input[name="mid"]');
+                var inputText = $('input[name="text"]');
+
+                $(".addReviewBtn").click(function (){
+                   inputMid.val("");
+                   inputText.val("");
+
+                   $(".removeBtn , .modifyBtn").hide();
+                   $(".reviewSaveBtn").show();
+
+                   reviewModal.modal('show');
+                });
+
             });
         </script>
     </th:block>
