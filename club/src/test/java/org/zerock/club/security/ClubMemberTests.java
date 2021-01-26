@@ -8,6 +8,7 @@ import org.zerock.club.entity.ClubMember;
 import org.zerock.club.entity.ClubMemberRole;
 import org.zerock.club.repository.ClubMemberRepository;
 
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -18,6 +19,7 @@ public class ClubMemberTests {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
 
 	@Test
 	public void insertDummies(){
@@ -45,5 +47,13 @@ public class ClubMemberTests {
 			}
 			repository.save(clubMember);
 		});
+	}
+
+	@Test
+	public void testRead(){
+		Optional<ClubMember> result = repository.findByEmail("user95@zerock.org",false);
+
+		ClubMember clubMember = result.get();
+		System.out.println(clubMember);
 	}
 }
